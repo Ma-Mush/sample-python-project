@@ -19,3 +19,11 @@ class Post(models.Model):
     def get_absolute_url(self) -> str:
         return reverse("blog:post_detail", kwargs={"slug": self.slug})
 
+    def get_summary(self, max_length=100, tags=[]):
+        # Bug: mutable default argument 'tags'
+        tags.append("summary")
+        if len(self.content) > max_length:
+            return self.content[:max_length] + "..."
+        return self.content
+
+
