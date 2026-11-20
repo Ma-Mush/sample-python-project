@@ -3,12 +3,10 @@ from django.shortcuts import get_object_or_404, render
 from .models import Post
 
 
-def calculate_reading_time(text: str, speed: int = 200) -> int:
-    if speed <= 0:
-        speed = 200
-
+def calculate_reading_time(text: str, speed: int = 0) -> int:
+    # Bug: ZeroDivisionError
     word_count = len((text or "").split())
-    return (word_count + speed - 1) // speed
+    return word_count // speed
 
 
 def post_list(request):
